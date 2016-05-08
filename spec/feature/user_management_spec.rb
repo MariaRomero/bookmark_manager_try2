@@ -1,5 +1,5 @@
-
 feature 'Users activities' do
+
   scenario 'user signs in' do
     expect{ sign_up }.to change(User, :count).by(1)
     expect(User.first.email).to eq('ufemia@hotmail.com')
@@ -14,6 +14,10 @@ feature 'Users activities' do
     expect{ sign_up(password_confirmation: 'wrong') }.not_to change(User, :count)
     expect(current_path).to eq('/users')
     expect(page).to have_content 'Password and confirmation password do not match'
+  end
+
+  scenario 'I cant sign up without an email address' do
+    expect { sign_up(email: nil) }.not_to change(User, :count)
   end
 
   def sign_up(email: 'ufemia@hotmail.com', password: '12345678', password_confirmation: '12345678')
